@@ -1,0 +1,1 @@
+This project aligns with the purpose of learning as stipulated by the organisers of fullstack open project.
