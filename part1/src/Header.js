@@ -1,12 +1,11 @@
-import React from 'react'
+import React from "react";
 
-const Header = () => {
-  const course = 'Half Stack application development'
+const Header = (props) => {
   return (
     <div>
-      <h1>{course}</h1>
+      <h1>{props.course}</h1>
     </div>
-  )
-}
+  );
+};
 
-export default Header
+export default Header;
