@@ -52,7 +52,7 @@ app.get("/persons", (request, response) => {
   response.json(persons);
 });
 
-app.get("/persons/info", (request, response) => {
+app.get("/persons/insight", (request, response) => {
   let date = new Date("July 06, 2021 12:00:00");
   const phonebook = `phonebook has ${persons.length} people`;
   response.send(phonebook + "<br><br>" + date);
