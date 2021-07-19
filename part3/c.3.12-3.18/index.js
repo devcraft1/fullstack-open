@@ -1,7 +1,9 @@
+require("dotenv").config();
 const express = require("express");
 const morgan = require("morgan");
 const cors = require("cors");
 const app = express();
+const Person = require("./models/person");
 
 app.use(cors());
 app.use(express.static("build"));
@@ -44,29 +46,43 @@ const persons = [
   },
 ];
 
+// Home page
 app.get("/", (request, response) => {
   response.send("Person home page");
 });
 
+// Get all person
 app.get("/persons", (request, response) => {
-  response.json(persons);
+  Person.find({}).then((persons) => {
+    response.json(persons);
+  });
 });
 
+// Insight
 app.get("/persons/insight", (request, response) => {
-  let date = new Date("July 06, 2021 12:00:00");
-  const phonebook = `phonebook has ${persons.length} people`;
-  response.send(phonebook + "<br><br>" + date);
+  Person.find({}).then((persons) => {
+    let date = new Date("July 06, 2021 12:00:00");
+    const phonebook = `phonebook has ${persons.length} people`;
+    response.send(phonebook + "<br><br>" + date);
+  });
 });
 
+// Get a person
 app.get("/persons/:id", (request, response) => {
-  const id = Number(request.params.id);
-  const findPersons = persons.find((val) => val.id === id);
-  response.json(findPersons);
-  if (!findPersons) {
-    response.status(404).end();
-  }
+  Person.findById(request.params.id)
+    .then((person) => {
+      if (person) {
+        response.json(person);
+      } else {
+        response.status(404).end();
+      }
+    })
+    .catch((error) => {
+      console.log(error);
+    });
 });
 
+// Add a person
 app.post("/persons", (request, response) => {
   const body = request.body;
 
@@ -86,24 +102,28 @@ app.post("/persons", (request, response) => {
     });
   }
 
-  const person = {
+  const person = new Person({
     name: body.name,
     number: body.number,
     id: generateId(),
-  };
+  });
 
-  const addPerson = persons.concat(person);
-
-  response.json(addPerson);
+  person
+    .save()
+    .then((person) => person.toJSON())
+    .then((savedPerson) => response.json(savedPerson));
 });
 
+// Delete person
 app.delete("/persons/:id", (request, response) => {
-  const id = Number(request.params.id);
-  persons.filter((remove) => remove.id !== id);
-  response.status(204).end();
+  Person.findByIdAndRemove(request.params.id)
+    .then(() => {
+      response.status(204).end();
+    })
+    .catch((error) => console.log(error));
 });
 
-const PORT = process.env.PORT || 3001;
+const PORT = process.env.PORT;
 app.listen(PORT, () => {
   console.log(`App running on http://localhost:${PORT}`);
 });
