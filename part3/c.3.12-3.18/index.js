@@ -23,28 +23,28 @@ const generateId = () => {
   return maxId + 1;
 };
 
-const persons = [
-  {
-    id: 1,
-    name: "Arto Hellas",
-    number: "040-123456",
-  },
-  {
-    id: 2,
-    name: "Ada Lovelace",
-    number: "39-44-5323523",
-  },
-  {
-    id: 3,
-    name: "Dan Abramov",
-    number: "12-43-234345",
-  },
-  {
-    id: 4,
-    name: "Mary Poppendieck",
-    number: "39-23-6423122",
-  },
-];
+// const persons = [
+//   {
+//     id: 1,
+//     name: "Arto Hellas",
+//     number: "040-123456",
+//   },
+//   {
+//     id: 2,
+//     name: "Ada Lovelace",
+//     number: "39-44-5323523",
+//   },
+//   {
+//     id: 3,
+//     name: "Dan Abramov",
+//     number: "12-43-234345",
+//   },
+//   {
+//     id: 4,
+//     name: "Mary Poppendieck",
+//     number: "39-23-6423122",
+//   },
+// ];
 
 // Home page
 app.get("/", (request, response) => {
@@ -68,7 +68,7 @@ app.get("/persons/insight", (request, response) => {
 });
 
 // Get a person
-app.get("/persons/:id", (request, response) => {
+app.get("/persons/:id", (request, response, next) => {
   Person.findById(request.params.id)
     .then((person) => {
       if (person) {
@@ -78,12 +78,13 @@ app.get("/persons/:id", (request, response) => {
       }
     })
     .catch((error) => {
-      console.log(error);
+      console.log("wrong ID");
+      next(error);
     });
 });
 
 // Add a person
-app.post("/persons", (request, response) => {
+app.post("/persons", (request, response, next) => {
   const body = request.body;
 
   if (!body.name && !body.number) {
@@ -111,16 +112,40 @@ app.post("/persons", (request, response) => {
   person
     .save()
     .then((person) => person.toJSON())
-    .then((savedPerson) => response.json(savedPerson));
+    .then((savedPerson) => response.json(savedPerson))
+    .catch((error) => next(error));
+});
+
+// Update person
+app.put("/persons/:id", (request, response, next) => {
+  const body = request.body;
+
+  const person = {
+    name: body.name,
+    number: body.number,
+  };
+
+  Person.findByIdAndUpdate(request.params.id, person, {
+    new: true,
+    runValidators: true,
+    context: "query",
+  })
+    .then((updatedPerson) => {
+      if (updatedPerson === null) {
+        return response.status(404).end();
+      }
+      response.json(updatedPerson);
+    })
+    .catch((error) => next(error));
 });
 
 // Delete person
-app.delete("/persons/:id", (request, response) => {
+app.delete("/persons/:id", (request, response, next) => {
   Person.findByIdAndRemove(request.params.id)
     .then(() => {
       response.status(204).end();
     })
-    .catch((error) => console.log(error));
+    .catch((error) => next(error));
 });
 
 const PORT = process.env.PORT;
