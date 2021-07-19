@@ -1,5 +1,5 @@
-require("dotenv").config();
 const express = require("express");
+const morgan = require("morgan");
 const cors = require("cors");
 const app = express();
 
@@ -105,5 +105,5 @@ app.delete("/persons/:id", (request, response) => {
 
 const PORT = process.env.PORT || 3001;
 app.listen(PORT, () => {
-  console.log(`App is running on http://localhost:${PORT}`);
+  console.log(`App running on http://localhost:${PORT}`);
 });

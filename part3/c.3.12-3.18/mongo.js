@@ -8,8 +8,10 @@ if (process.argv.length < 3) {
 }
 
 const password = process.argv[2];
+const name = process.argv[3];
+const phone = process.argv[4];
 
-const url = `mongodb+srv://fullstack:${MONGODB_PASSWORD}@cluster1.7mhih.mongodb.net/myFirstDatabase?retryWrites=true&w=majority`;
+const url = `mongodb+srv://fullstack:${password}@cluster1.7mhih.mongodb.net/myFirstDatabase?retryWrites=true&w=majority`;
 
 mongoose.connect(url, {
   useNewUrlParser: true,
@@ -18,7 +20,7 @@ mongoose.connect(url, {
   useCreateIndex: true,
 });
 
-const noteSchema = new mongoose.Schema({
+const personSchema = new mongoose.Schema({
   content: String,
   date: Date,
   important: Boolean,
