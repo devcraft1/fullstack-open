@@ -8,8 +8,6 @@ if (process.argv.length < 3) {
 }
 
 const password = process.argv[2];
-const name = process.argv[3];
-const phone = process.argv[4];
 
 const url = `mongodb+srv://fullstack:${password}@cluster1.7mhih.mongodb.net/myFirstDatabase?retryWrites=true&w=majority`;
 
@@ -21,20 +19,22 @@ mongoose.connect(url, {
 });
 
 const personSchema = new mongoose.Schema({
-  content: String,
-  date: Date,
-  important: Boolean,
+  name: String,
+  number: Number,
 });
 
-const Person = mongoose.model("Note", personSchema);
+const Person = mongoose.model("Person", personSchema);
 
-const person = new Person({
-  content: "HTML is Easy",
-  date: new Date(),
-  important: true,
-});
+if (process.argv[3] && process.argv[4]) {
+  const name = process.argv[3];
+  const number = process.argv[4];
+  const person = new Person({
+    name: name,
+    number: number,
+  });
 
-person.save().then((result) => {
-  console.log("note saved!");
-  mongoose.connection.close();
-});
+  person.save().then((result) => {
+    console.log("person saved!");
+    mongoose.connection.close();
+  });
+}
