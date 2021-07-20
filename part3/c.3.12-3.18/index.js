@@ -3,7 +3,7 @@ const express = require("express");
 const morgan = require("morgan");
 const cors = require("cors");
 const app = express();
-const Person = require("./models/person");
+const Person = require("./model/person");
 
 app.use(cors());
 app.use(express.static("build"));
@@ -18,33 +18,6 @@ app.use(
     ":method :url :status :res[content-length] - :response-time ms :content"
   )
 );
-const generateId = () => {
-  const maxId = persons.length > 0 ? Math.max(...persons.map((n) => n.id)) : 0;
-  return maxId + 1;
-};
-
-// const persons = [
-//   {
-//     id: 1,
-//     name: "Arto Hellas",
-//     number: "040-123456",
-//   },
-//   {
-//     id: 2,
-//     name: "Ada Lovelace",
-//     number: "39-44-5323523",
-//   },
-//   {
-//     id: 3,
-//     name: "Dan Abramov",
-//     number: "12-43-234345",
-//   },
-//   {
-//     id: 4,
-//     name: "Mary Poppendieck",
-//     number: "39-23-6423122",
-//   },
-// ];
 
 // Home page
 app.get("/", (request, response) => {
@@ -68,7 +41,7 @@ app.get("/persons/insight", (request, response) => {
 });
 
 // Get a person
-app.get("/persons/:id", (request, response, next) => {
+app.get("/persons/:id", (request, response) => {
   Person.findById(request.params.id)
     .then((person) => {
       if (person) {
@@ -78,13 +51,12 @@ app.get("/persons/:id", (request, response, next) => {
       }
     })
     .catch((error) => {
-      console.log("wrong ID");
-      next(error);
+      console.log(error);
     });
 });
 
 // Add a person
-app.post("/persons", (request, response, next) => {
+app.post("/persons", (request, response) => {
   const body = request.body;
 
   if (!body.name && !body.number) {
@@ -106,18 +78,17 @@ app.post("/persons", (request, response, next) => {
   const person = new Person({
     name: body.name,
     number: body.number,
-    id: generateId(),
   });
 
   person
     .save()
     .then((person) => person.toJSON())
     .then((savedPerson) => response.json(savedPerson))
-    .catch((error) => next(error));
+    .catch((error) => console.log(error));
 });
 
 // Update person
-app.put("/persons/:id", (request, response, next) => {
+app.put("/persons/:id", (request, response) => {
   const body = request.body;
 
   const person = {
@@ -127,8 +98,6 @@ app.put("/persons/:id", (request, response, next) => {
 
   Person.findByIdAndUpdate(request.params.id, person, {
     new: true,
-    runValidators: true,
-    context: "query",
   })
     .then((updatedPerson) => {
       if (updatedPerson === null) {
@@ -136,16 +105,16 @@ app.put("/persons/:id", (request, response, next) => {
       }
       response.json(updatedPerson);
     })
-    .catch((error) => next(error));
+    .catch((error) => console.log(error));
 });
 
 // Delete person
-app.delete("/persons/:id", (request, response, next) => {
+app.delete("/persons/:id", (request, response) => {
   Person.findByIdAndRemove(request.params.id)
     .then(() => {
       response.status(204).end();
     })
-    .catch((error) => next(error));
+    .catch((error) => console.log(error));
 });
 
 const PORT = process.env.PORT;
