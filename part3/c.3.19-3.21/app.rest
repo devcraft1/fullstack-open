@@ -1,0 +1,12 @@
+GET http://localhost:3001/
+
+GET http://localhost:3001/persons/
+
+GET http://localhost:3001/persons/insight
+
+DELETE http://localhost:3001/persons/id
+
+PUT http://localhost:3001/persons/id
+
+
+
