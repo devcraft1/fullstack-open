@@ -11,4 +11,4 @@ Heroku
 4. git add .
 5. git commit -am'commit-message'
 6. git push heroku master
-7. heroku open.
+7. heroku open
