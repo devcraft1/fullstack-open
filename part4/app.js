@@ -36,7 +36,3 @@ app.use(middleware.unknownEndpoint);
 app.use(middleware.errorHandler);
 
 module.exports = app;
-
-MONGODB_URI =
-  "mongodb+srv://fullstack:2zrbanyFS3KH1Rhf@cluster1.lfu0b.mongodb.net/myFirstDatabase?retryWrites=true&w=majority";
-PORT = 3003;
