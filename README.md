@@ -13,7 +13,7 @@ $ heroku login
 Clone the repository
 Use Git to clone fullstackopen-app's source code to your local machine.
 
-$ heroku git:clone -a fullstackopen-app
+$ heroku git:clone -a fullstackopen-project-app
 $ cd fullstackopen-app
 Deploy your changes
 Make some changes to the code you just cloned and deploy them to Heroku using Git.
