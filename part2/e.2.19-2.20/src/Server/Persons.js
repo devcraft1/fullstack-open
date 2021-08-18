@@ -1,6 +1,6 @@
 import axios from "axios";
 
-const baseUrl = "https://project-person-api.herokuapp.com/persons";
+const baseUrl = "https://fullstackopen-app.herokuapp.com/api/persons";
 
 const getPersons = () => {
   return axios.get(baseUrl);

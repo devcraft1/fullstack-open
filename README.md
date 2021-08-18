@@ -1,14 +1,25 @@
 This project aligns with the purpose of learning as stipulated by the organisers of fullstack open project.
 
-Heroku
-# HEROKU 
+# Deploy to HEROKU 
 
-# https://persons-api-project.herokuapp.com/
-# Steps
-1. Login to heroku through terminal
-2. Create app ---- heroku create app-name
-3. link app to project --- heroku git:remote -a app-name 
-4. git add .
-5. git commit -am'commit-message'
-6. git push heroku master
-7. heroku open
+https://fullstackopen-project-app.herokuapp.com/
+
+Install the Heroku CLI
+Download and install the Heroku CLI.
+
+If you haven't already, log in to your Heroku account and follow the prompts to create a new SSH public key.
+
+$ heroku login
+Clone the repository
+Use Git to clone fullstackopen-app's source code to your local machine.
+
+$ heroku git:clone -a fullstackopen-app
+$ cd fullstackopen-app
+Deploy your changes
+Make some changes to the code you just cloned and deploy them to Heroku using Git.
+
+$ git add .
+$ git commit -am "make it better"
+$ git push heroku master
+# Config
+heroku config:set MONGODB_URI=Alex
