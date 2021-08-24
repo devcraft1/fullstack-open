@@ -22,4 +22,5 @@ $ git add .
 $ git commit -am "make it better"
 $ git push heroku master
 # Config
-heroku config:set MONGODB_URI=Alex
+heroku config:set MONGODB_URI=Alex 
+
