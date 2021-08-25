@@ -9,7 +9,7 @@ const initialBlogs = [
   },
   {
     title: "Node",
-    author: "Jposeph Peculiar",
+    author: "Joseph Peculiar",
     url: "url",
     likes: 7,
   },
