@@ -2,20 +2,20 @@ const listHelper = require("../utils/list_helpers");
 
 describe("favoriteBlog", () => {
   const favorite = {
-    title: "Canonical string reduction",
-    author: "Edsger W. Dijkstra",
+    title: "Node.js",
+    author: "Ukonu Dennis",
     likes: 12,
   };
   const blogs = [
     {
-      title: "Linux distribution system",
-      author: "Michael Chan",
+      title: "Javascript",
+      author: "Joseph Peculiar",
       likes: 7,
     },
 
     {
-      title: "Canonical string reduction",
-      author: "Edsger W. Dijkstra",
+      title: "Node.js",
+      author: "Ukonu Dennis",
       likes: 12,
     },
   ];

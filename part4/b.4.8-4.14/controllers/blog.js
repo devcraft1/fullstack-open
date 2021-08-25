@@ -11,15 +11,15 @@ blogRouter.get("/", async (request, response) => {
     .catch((error) => next(error));
 });
 
-blogRouter.post("/", (request, response) => {
-  const body = request.body;
+blogRouter.post("/", async (request, response) => {
+  const body = await request.body;
   const blog = new Blog({
     title: body.title,
     author: body.author,
     url: body.url,
     likes: body.likes,
   });
-  blog
+  await blog
     .save()
     .then((result) => {
       response.status(201).json(result);
