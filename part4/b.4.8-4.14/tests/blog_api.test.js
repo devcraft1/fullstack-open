@@ -31,6 +31,39 @@ test("a specific blog is within the returned blogs ", async () => {
   expect(blogContent).toContain("React");
 });
 
+test("adds a new blog and verifies the amount returned", async () => {
+  const newBlog = {
+    title: "React",
+    author: "Ukonu Dennis",
+    url: "url",
+    likes: 12,
+  };
+  await api
+    .post("/api/blogs")
+    .send(newBlog)
+    .expect(200)
+    .expect("Content-Type", /application\/json/);
+
+  const response = await api.get("/api/blogs");
+
+  const title = response.body.map((r) => r.title);
+
+  expect(response.body).toHaveLength(helpers.initialBlogs.length + 1);
+  expect(title).toContain("React");
+});
+
+test("blog without title is not added", async () => {
+  const newBlog = {
+    title: "java",
+  };
+
+  await api.post("/api/blogs").send(newBlog).expect(400);
+
+  const response = await api.get("/api/blogs");
+
+  expect(response.body).toHaveLength(helpers.initialBlogs.length);
+});
+
 afterAll(() => {
   mongoose.connection.close();
 });

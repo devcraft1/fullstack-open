@@ -22,7 +22,7 @@ blogRouter.post("/", async (request, response) => {
   await blog
     .save()
     .then((result) => {
-      response.status(201).json(result);
+      response.json(result.toJSON);
     })
     .catch((error) => next(error));
 });
