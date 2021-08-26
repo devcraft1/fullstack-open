@@ -54,8 +54,8 @@ test("a valid blog can be added", async () => {
 
 test("blog without title is not added", async () => {
   const newBlog = {
-    title: "willremovethissoon",
     author: "Jhon Doe",
+    url: "fullstackopen.com",
   };
 
   await api.post("/api/blogs").send(newBlog).expect(400);

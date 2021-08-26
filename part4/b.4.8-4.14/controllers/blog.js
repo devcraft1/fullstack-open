@@ -4,14 +4,15 @@ const Blog = require("../models/blog");
 const logger = require("../utils/logger");
 
 blogRouter.get("/", async (request, response) => {
-  await Blog.find({})
-    .then((blogs) => {
-      response.json(blogs);
-    })
-    .catch((error) => next(error));
+  try {
+    const allBlogs = await Blog.find({});
+    response.json(allBlogs);
+  } catch (e) {
+    next(e);
+  }
 });
 
-blogRouter.post("/", async (request, response) => {
+blogRouter.post("/", async (request, response, next) => {
   const body = request.body;
   if (!body.author || !body.title || !body.url)
     return response.status(400).json({ error: "title or url is missing" });
@@ -22,20 +23,21 @@ blogRouter.post("/", async (request, response) => {
     url: body.url,
     likes: body.likes,
   });
-  blog
-    .save()
-    .then((result) => {
-      response.json(result.toJSON);
-    })
-    .catch((error) => logger.error(error));
+  try {
+    const savedBlog = await blog.save();
+    response.json(savedBlog);
+  } catch (e) {
+    next(e);
+  }
 });
 
 blogRouter.delete("/:id", async (request, response) => {
-  Blog.findByIdAndRemove(request.params.id)
-    .then(() => {
-      response.status(204).end();
-    })
-    .catch((error) => logger.error(error));
+  try {
+    const deleteBlog = await Blog.findByIdAndRemove(request.params.id);
+    response.json(deleteBlog);
+  } catch (e) {
+    next(e);
+  }
 });
 
 module.exports = blogRouter;
