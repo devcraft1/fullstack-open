@@ -31,7 +31,7 @@ test("a specific blog is within the returned blogs ", async () => {
   expect(blogContent).toContain("React");
 });
 
-test("adds a new blog and verifies the amount returned", async () => {
+test("a valid blog can be added", async () => {
   const newBlog = {
     title: "React",
     author: "Ukonu Dennis",
@@ -54,14 +54,15 @@ test("adds a new blog and verifies the amount returned", async () => {
 
 test("blog without title is not added", async () => {
   const newBlog = {
-    title: "java",
+    title: "willremovethissoon",
+    author: "Jhon Doe",
   };
 
   await api.post("/api/blogs").send(newBlog).expect(400);
 
-  const response = await api.get("/api/blogs");
+  const blogAtEnd = await helpers.blogsInDb();
 
-  expect(response.body).toHaveLength(helpers.initialBlogs.length);
+  expect(blogAtEnd).toHaveLength(helpers.initialBlogs.length);
 });
 
 afterAll(() => {

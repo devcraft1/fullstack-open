@@ -12,19 +12,22 @@ blogRouter.get("/", async (request, response) => {
 });
 
 blogRouter.post("/", async (request, response) => {
-  const body = await request.body;
+  const body = request.body;
+  if (!body.author || !body.title || !body.url)
+    return response.status(400).json({ error: "title or url is missing" });
+
   const blog = new Blog({
     title: body.title,
     author: body.author,
     url: body.url,
     likes: body.likes,
   });
-  await blog
+  blog
     .save()
     .then((result) => {
       response.json(result.toJSON);
     })
-    .catch((error) => next(error));
+    .catch((error) => logger.error(error));
 });
 
 blogRouter.delete("/:id", async (request, response) => {
@@ -32,7 +35,7 @@ blogRouter.delete("/:id", async (request, response) => {
     .then(() => {
       response.status(204).end();
     })
-    .catch((error) => next(error));
+    .catch((error) => logger.error(error));
 });
 
 module.exports = blogRouter;
