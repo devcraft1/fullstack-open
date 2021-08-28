@@ -2,8 +2,9 @@ const mongoose = require("mongoose");
 const supertest = require("supertest");
 const app = require("../../app");
 const api = supertest(app);
-const Blog = require("../../models/blog");
 const helpers = require("./test_helpers");
+const Blog = require("../../models/blog");
+const User = require("../../models/user");
 const logger = require("../../utils/logger");
 
 beforeEach(async () => {
@@ -99,7 +100,7 @@ describe("addition of a new blog", () => {
 
     expect(blogAtEnd).toHaveLength(helpers.initialBlogs.length);
   });
-});
+}, 1000);
 
 describe("deletion of a blog", () => {
   test("succeeds with status code 204 if id is valid", async () => {
