@@ -1,10 +1,10 @@
 const mongoose = require("mongoose");
 const supertest = require("supertest");
-const app = require("../app");
+const app = require("../../app");
 const api = supertest(app);
-const Blog = require("../models/blog");
-const helpers = require("./testhelpers/test_helpers");
-const logger = require("../utils/logger");
+const Blog = require("../../models/blog");
+const helpers = require("./test_helpers");
+const logger = require("../../utils/logger");
 
 beforeEach(async () => {
   await Blog.deleteMany({});
@@ -43,7 +43,7 @@ describe("a specific blog can be viewed", () => {
     const blogToView = blogAtStart[0];
 
     const resultBlog = await api
-      .get(`/api/blogs/${blogToView._id}`)
+      .get(`/api/blogs/${blogToView.id}`)
       .expect(200)
       .expect("Content-Type", /application\/json/);
 
@@ -106,7 +106,7 @@ describe("deletion of a blog", () => {
     const blogAtStart = await helpers.blogsInDb();
     const blogToDelete = blogAtStart[0];
 
-    await api.delete(`/api/blogs/${blogToDelete._id}`).expect(204);
+    await api.delete(`/api/blogs/${blogToDelete.id}`).expect(204);
     const blogAtEnd = await helpers.blogsInDb();
     expect(blogAtEnd).toHaveLength(helpers.initialBlogs.length - 1);
 
