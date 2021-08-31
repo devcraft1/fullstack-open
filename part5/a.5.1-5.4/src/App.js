@@ -9,6 +9,10 @@ const App = () => {
   const [errorMessage, setErrorMessage] = useState(null);
   const [user, setUser] = useState(null);
 
+  if (user === true) {
+    console.log('user logged in');
+  }
+
   useEffect(() => {
     blogService.getAll().then((blogs) => setBlogs(blogs));
   }, []);
@@ -37,7 +41,7 @@ const App = () => {
       {blogs.map((blog) => (
         <Blog key={blog.id} blog={blog} />
       ))}
-
+      <h1>Log into application</h1>
       <form onSubmit={handleLogin}>
         <div>
           username
