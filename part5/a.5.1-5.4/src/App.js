@@ -3,7 +3,6 @@ import Blog from './components/Blog';
 import blogService from './services/blogs';
 import loginService from './services/login';
 import Notification from './components/Notification';
-import BlogForm from './components/BlogForm';
 
 const App = () => {
   const [blogs, setBlogs] = useState([]);
@@ -15,8 +14,6 @@ const App = () => {
   useEffect(() => {
     blogService.getAll().then((blogs) => setBlogs(blogs));
   }, []);
-
-  const blogForm = () => <BlogForm createBlog={createBlog} />;
 
   const loginForm = () => (
     <form onSubmit={handleLogin}>
