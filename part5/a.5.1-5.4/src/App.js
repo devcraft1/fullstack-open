@@ -57,7 +57,12 @@ const App = () => {
       }, 1000);
     }
   };
-
+  const displayLoggedInUser = () => {
+    setTimeout(() => {
+      setMessage({ text: `${user.name}logged-in`, type: 'success' });
+      setMessage(null);
+    }, 1000);
+  };
   const blogForm = () => {};
   return (
     <div>
@@ -67,6 +72,7 @@ const App = () => {
         loginForm()
       ) : (
         <div>
+          {displayLoggedInUser()}
           <h2>blogs</h2>
           {blogs.map((blog) => (
             <Blog key={blog.id} blog={blog} />
