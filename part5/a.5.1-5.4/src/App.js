@@ -67,7 +67,13 @@ const App = () => {
       ) : (
         <div>
           <p>{user.name} is logged-in </p>
-          <button>logout</button>
+          <button
+            onClick={() => {
+              console.log('logout');
+            }}
+          >
+            logout
+          </button>
           <h2>blogs</h2>
           {blogs.map((blog) => (
             <Blog key={blog.id} blog={blog} />
