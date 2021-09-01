@@ -39,12 +39,6 @@ const App = () => {
     </form>
   );
 
-  const displayLoggedInUser = () => {
-    setTimeout(() => {
-      setMessage({ text: `${user.name}logged-in`, type: 'success' });
-    }, 1000);
-  };
-
   const handleLogin = async (event) => {
     event.preventDefault();
     console.log('logging in with', username, password);
