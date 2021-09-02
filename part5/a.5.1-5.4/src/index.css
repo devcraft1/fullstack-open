@@ -15,7 +15,7 @@ notification {
   color: rgb(255, 0, 0);
 }
 
-.notification--errors {
+.notification--err-or {
     color: red;
     background: lightgrey;
     font-size: 20px;
@@ -25,7 +25,7 @@ notification {
     margin-bottom: 10px;
 }
 
-.notification--successs {
+.notification--succe-ss {
     color:green;
     background: lightgrey;
     font-size: 20px;
