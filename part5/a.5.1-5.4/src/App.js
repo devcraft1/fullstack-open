@@ -12,10 +12,11 @@ const App = () => {
   const [password, setPassword] = useState('');
   const [message, setMessage] = useState(null);
   const [user, setUser] = useState(null);
+  const [update, setUpdate] = useState(null);
 
   useEffect(() => {
     blogService.getAll().then((blogs) => setBlogs(blogs));
-  }, []);
+  }, [update]);
 
   useEffect(() => {
     setTimeout(() => {
@@ -42,6 +43,7 @@ const App = () => {
       handlePasswordChange={({ target }) => setPassword(target.value)}
     />
   );
+
   const handleLogin = async (event) => {
     event.preventDefault();
     console.log('logging in with', username, password);
@@ -63,6 +65,22 @@ const App = () => {
       }, 1000);
     }
   };
+
+  // log out
+  const handleLogout = async () => {
+    window.localStorage.removeItem('loggedBlogappUser');
+    setMessage({
+      text: 'Logout success',
+      type: 'succe-ss',
+    });
+    setUser(null);
+  };
+
+  const logOutUser = () => (
+    <div>
+      {user.name} logged in <button onClick={handleLogout}>Logout</button>
+    </div>
+  );
 
   // blog form
   const blogForm = () => <BlogForm createBlog={createBlog} />;
@@ -90,9 +108,7 @@ const App = () => {
         loginForm()
       ) : (
         <div>
-          <p>
-            {user.name} is logged-in <button onclick={() => {}}>logout</button>
-          </p>
+          {logOutUser()}
           {blogForm()}
           <h2>blogs</h2>
           {blogs.map((blog) => (
