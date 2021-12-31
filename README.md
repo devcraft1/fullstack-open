@@ -25,5 +25,3 @@ $ git push heroku master
 # Config
 
 heroku config:set MONGODB_URI=Alex
-
-Happy coding!
