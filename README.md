@@ -1,6 +1,6 @@
 This project aligns with the purpose of learning as stipulated by the organisers of fullstack open project.
 
-# Deploy to HEROKU 
+# Deploy to HEROKU
 
 https://fullstackopen-project-app.herokuapp.com/
 
@@ -21,6 +21,9 @@ Make some changes to the code you just cloned and deploy them to Heroku using Gi
 $ git add .
 $ git commit -am "make it better"
 $ git push heroku master
-# Config
-heroku config:set MONGODB_URI=Alex 
 
+# Config
+
+heroku config:set MONGODB_URI=Alex
+
+Happy coding!
