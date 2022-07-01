@@ -2,5 +2,3 @@ GET http://localhost:3001/
 GET http://localhost:3001/persons/
 GET http://localhost:3001/persons/info
 DELETE http://localhost:3001/persons/1
-
-POST http://localhost:3001
